@@ -2,8 +2,9 @@ namespace TheProblem
 {
     public class StateMachine
     {
-        State currentState;
-        public BossLogic boss; //TODO: Change to getter and setter after testing **
+        //TODO: Change to getter and setter after testing **
+        public State currentState;
+        public BossLogic boss;
 
         public void Initialize(BossLogic b, State initialState)
         {
