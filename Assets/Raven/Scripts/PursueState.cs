@@ -7,12 +7,14 @@ namespace TheProblem
     {
         private NavMeshAgent agent;
         private Transform target;
+        private Animator animator;
 
 
-        public PursueState(StateMachine m, NavMeshAgent agent, Transform target) : base(m)
+        public PursueState(StateMachine m, NavMeshAgent agent, Transform target, Animator animator) : base(m)
         {
             this.agent = agent;
             this.target = target;
+            this.animator = animator;
         }
         public override void UpdateState()
         {
@@ -21,6 +23,7 @@ namespace TheProblem
             {
                 // Move to player's position
                 agent.SetDestination(target.position);
+
             }
 
         }
@@ -32,6 +35,8 @@ namespace TheProblem
             {
                 // Can move
                 agent.isStopped = false;
+                animator.SetBool("isIdle", false);
+                animator.SetBool("isPursuing", true);
             }
         }
         public override void ExitState()
@@ -41,6 +46,8 @@ namespace TheProblem
             {
                 // Stop moving towards player
                 agent.isStopped = true;
+                animator.SetBool("isPursuing", false);
+
             }
         }
     }

@@ -6,17 +6,23 @@ namespace TheProblem
     public class BossLogic : MonoBehaviour
     {
         [SerializeField] Transform target;
+        [SerializeField] Animator animator;
         [SerializeField] float sightRange = 10f;
         [SerializeField] float attackRange = 5f;
+
+
+        //TODO: MAKE GETTERS AND SETTERS
         public StateMachine myStateMachine;
         public NavMeshAgent agent;
+
 
         // Start is called before the first frame update
         void Start()
         {
             myStateMachine = new StateMachine();
-            myStateMachine.Initialize(this, new IdleState(myStateMachine));
+            myStateMachine.Initialize(this, new IdleState(myStateMachine, animator));
             agent = GetComponent<NavMeshAgent>();
+
         }
 
         // Update is called once per frame
@@ -27,13 +33,15 @@ namespace TheProblem
             // If player is in line of sight, change state to pursue
             if (LineOfSight() && myStateMachine.currentState is not PursueState)
             {
-                myStateMachine.ChangeState(new PursueState(myStateMachine, agent, target));
+                myStateMachine.ChangeState(new PursueState(myStateMachine, agent, target, animator));
+
             }
 
             // If player is not in sight, return to idle state
             else if (!LineOfSight() && myStateMachine.currentState is not IdleState)
             {
-                myStateMachine.ChangeState(new IdleState(myStateMachine));
+                myStateMachine.ChangeState(new IdleState(myStateMachine, animator));
+
             }
         }
 
