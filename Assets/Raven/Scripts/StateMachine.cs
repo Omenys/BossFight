@@ -2,7 +2,6 @@ namespace TheProblem
 {
     public class StateMachine
     {
-        //TODO: MAKE GETTERS AND SETTERS
         public State currentState;
         public BossLogic boss;
 

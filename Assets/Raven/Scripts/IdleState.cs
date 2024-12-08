@@ -12,17 +12,15 @@ namespace TheProblem
         }
         public override void UpdateState()
         {
-            Debug.Log("I'm idle!");
             animator.SetBool("isIdle", true);
             animator.SetBool("isPursuing", false);
         }
         public override void EnterState()
         {
-            Debug.Log("Start idle");
+
         }
         public override void ExitState()
         {
-            Debug.Log("Stop idle");
             animator.SetBool("isIdle", false);
         }
     }

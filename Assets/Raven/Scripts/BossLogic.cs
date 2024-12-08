@@ -8,12 +8,16 @@ namespace TheProblem
         [SerializeField] Transform target;
         [SerializeField] Animator animator;
         [SerializeField] float sightRange = 10f;
-        [SerializeField] float attackRange = 5f;
+        [SerializeField] float attackRange = 4f;
 
-
-        //TODO: MAKE GETTERS AND SETTERS
         public StateMachine myStateMachine;
         public NavMeshAgent agent;
+
+
+        public float GetAttackRange()
+        {
+            return attackRange;
+        }
 
 
         // Start is called before the first frame update
@@ -30,15 +34,27 @@ namespace TheProblem
         {
             myStateMachine.Update();
 
-            // If player is in line of sight, change state to pursue
-            if (LineOfSight() && myStateMachine.currentState is not PursueState)
+            // Cache line of sight
+            bool playerInSight = LineOfSight();
+
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+            // If player is in line of sight and attack range, change state to attack
+            if (playerInSight && distanceToTarget <= attackRange && myStateMachine.currentState is not AttackState)
             {
-                myStateMachine.ChangeState(new PursueState(myStateMachine, agent, target, animator));
+                Debug.Log("SWAPPING TO ATTACK STATE");
+                myStateMachine.ChangeState(new AttackState(myStateMachine, agent, target, animator, this));
+            }
+
+            // If player is in line of sight, change state to pursue
+            if (playerInSight && distanceToTarget > attackRange && myStateMachine.currentState is not PursueState)
+            {
+                myStateMachine.ChangeState(new PursueState(myStateMachine, agent, target, animator, this));
 
             }
 
             // If player is not in sight, return to idle state
-            else if (!LineOfSight() && myStateMachine.currentState is not IdleState)
+            else if (!playerInSight && myStateMachine.currentState is not IdleState)
             {
                 myStateMachine.ChangeState(new IdleState(myStateMachine, animator));
 
