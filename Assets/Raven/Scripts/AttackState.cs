@@ -30,16 +30,22 @@ namespace TheProblem
                 myStateMachine.ChangeState(new PursueState(myStateMachine, agent, target, animator, boss));
                 return;
             }
-
             // Start attack animation
             Debug.Log("Attacking the player");
             animator.SetTrigger("BasicAttack");
-
         }
 
         public override void EnterState()
         {
             Debug.Log("Enter Attack State");
+
+            // Get head collider
+            HeadCollision headCollider = agent.GetComponentInChildren<HeadCollision>();
+            if (headCollider != null)
+            {
+                // Pass attack state
+                headCollider.SetAttackState(this);
+            }
 
             if (agent != null)
             {
@@ -55,6 +61,22 @@ namespace TheProblem
         {
             Debug.Log("Exit Attack State");
 
+        }
+
+        // Basic Attack Logic
+        public void BasicAttack()
+        {
+            Damage damage = new Damage
+            {
+                amount = 1,
+                knockbackForce = 2
+            };
+
+            Damageable bossDamage = target.GetComponent<Damageable>();
+            if (bossDamage != null)
+            {
+                bool hitPlayer = bossDamage.Hit(damage);
+            }
         }
     }
 }
