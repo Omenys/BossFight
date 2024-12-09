@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -45,7 +44,7 @@ public class Damageable : MonoBehaviour
         if (currentHealth == 0)
             return false;
 
-        if(flashMaterial != null)
+        if (flashMaterial != null)
         {
             StartHitFlash();
         }
@@ -58,7 +57,7 @@ public class Damageable : MonoBehaviour
 
         OnHealthChanged?.Invoke(damage.amount, currentHealth);
 
-        if(hurtSounds != null)
+        if (hurtSounds != null)
             SoundEffectsManager.instance.PlayRandomClip(hurtSounds.clips, true);
 
         if (damageEffectPrefab != null)
@@ -79,7 +78,7 @@ public class Damageable : MonoBehaviour
     {
         OnDeath?.Invoke();
 
-        if(deathSounds != null)
+        if (deathSounds != null)
             SoundEffectsManager.instance.PlayRandomClip(deathSounds.clips, true);
     }
 

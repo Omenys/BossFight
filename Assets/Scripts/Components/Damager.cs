@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +14,7 @@ public class Damager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void SetDamageAmount(int amount)
@@ -47,7 +45,7 @@ public class Damager : MonoBehaviour
                     Instantiate(hitEffectPrefab, other.transform.position, Quaternion.identity);
                 }
 
-                if(hitSounds != null)
+                if (hitSounds != null)
                     SoundEffectsManager.instance.PlayRandomClip(hitSounds.clips, true);
             }
         }

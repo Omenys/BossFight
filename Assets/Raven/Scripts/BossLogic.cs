@@ -10,6 +10,15 @@ namespace TheProblem
         [SerializeField] float sightRange = 10f;
         [SerializeField] float attackRange = 4f;
 
+
+        [SerializeField] int bossMaxHealth = 20;
+
+        Bar bossHealthBar;
+
+        Damageable damageable;
+
+        int currentBossHealth;
+
         public StateMachine myStateMachine;
         public NavMeshAgent agent;
 
@@ -26,7 +35,7 @@ namespace TheProblem
             myStateMachine = new StateMachine();
             myStateMachine.Initialize(this, new IdleState(myStateMachine, animator));
             agent = GetComponent<NavMeshAgent>();
-
+            damageable = GetComponent<Damageable>();
         }
 
         // Update is called once per frame
@@ -42,7 +51,6 @@ namespace TheProblem
             // If player is in line of sight and attack range, change state to attack
             if (playerInSight && distanceToTarget <= attackRange && myStateMachine.currentState is not AttackState)
             {
-                Debug.Log("SWAPPING TO ATTACK STATE");
                 myStateMachine.ChangeState(new AttackState(myStateMachine, agent, target, animator, this));
             }
 
@@ -93,5 +101,22 @@ namespace TheProblem
             }
             return false;
         }
+
+        public void BossHit(Damage damage)
+        {
+            Debug.Log("Boss hit!");
+            currentBossHealth -= damage.amount;
+            if (currentBossHealth < 0)
+            {
+                currentBossHealth = 0;
+            }
+        }
+
+        public void BossDeath()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
+
+

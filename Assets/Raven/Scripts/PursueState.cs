@@ -29,7 +29,6 @@ namespace TheProblem
             }
             else
             {
-                Debug.Log("Pursuing player");
                 // Move to player's position
                 agent.isStopped = false;
                 agent.SetDestination(target.position);

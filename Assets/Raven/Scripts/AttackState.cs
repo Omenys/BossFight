@@ -19,7 +19,6 @@ namespace TheProblem
         }
         public override void UpdateState()
         {
-            Debug.Log("HELLO ATTACK UPDATED");
 
             // Distance to player
             float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
@@ -31,13 +30,11 @@ namespace TheProblem
                 return;
             }
             // Start attack animation
-            Debug.Log("Attacking the player");
             animator.SetTrigger("BasicAttack");
         }
 
         public override void EnterState()
         {
-            Debug.Log("Enter Attack State");
 
             // Get head collider
             HeadCollision headCollider = agent.GetComponentInChildren<HeadCollision>();
@@ -59,7 +56,6 @@ namespace TheProblem
         }
         public override void ExitState()
         {
-            Debug.Log("Exit Attack State");
 
         }
 
